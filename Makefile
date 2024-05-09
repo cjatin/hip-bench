@@ -4,6 +4,10 @@ bench:
 	hipcc source/source.cpp source/main.cpp -I bench_dir/build/install/include -L bench_dir/build/install/lib -lbenchmark -lbenchmark_main -o out
 	./out
 
+json:
+	hipcc source/source.cpp source/main.cpp -I bench_dir/build/install/include -L bench_dir/build/install/lib -lbenchmark -lbenchmark_main -o out
+	./out --benchmark_out=out.json --benchmark_out_format=json
+
 gbench:
 	mkdir -p bench_dir
 	git clone https://github.com/google/benchmark.git bench_dir/
@@ -14,7 +18,7 @@ gbench:
 
 clean:
 	rm -rf bench_dir
-	rm -rf *.o *.out
+	rm -rf *.o *.out *.json
 
 help:
 	echo "make gbench # build google benchmark"
