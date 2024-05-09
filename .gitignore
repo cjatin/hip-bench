@@ -1,0 +1,6 @@
+bench_dir
+*.o
+*.exe
+*.out
+*out*
+*vscode*
