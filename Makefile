@@ -13,7 +13,7 @@ gbench:
 	git clone https://github.com/google/benchmark.git bench_dir/
 	cmake -E make_directory "bench_dir/build"
 	cmake -E chdir "bench_dir/build" cmake -DBENCHMARK_DOWNLOAD_DEPENDENCIES=on -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=install -DBENCHMARK_ENABLE_TESTING=OFF -DBENCHMARK_INSTALL_DOCS=OFF -DCMAKE_CXX_COMPILER=clang++ ../
-	cmake --build "bench_dir/build" --config Release
+	cmake --build "bench_dir/build" --config Release --parallel $(nproc)
 	cmake --install "bench_dir/build" --config Release
 
 clean:
