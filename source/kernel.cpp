@@ -10,7 +10,7 @@ __global__ void accumulate_values(float *a, float *b, size_t size) {
   }
 }
 
-static void BM_Kernelx1000_Memcpy_Sync(benchmark::State &state) {
+static void BM_KernelxN_Memcpy_Sync(benchmark::State &state) {
   float *din, *dvals;
   constexpr size_t size = 256;
   check(hipMalloc(&din, sizeof(float) * size));
@@ -44,3 +44,5 @@ static void BM_Kernelx1000_Memcpy_Sync(benchmark::State &state) {
   check(hipFree(din));
   check(hipFree(dvals));
 }
+
+BENCHMARK(BM_KernelxN_Memcpy_Sync)->RangeMultiplier(2)->Range(100, 1000);

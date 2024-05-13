@@ -21,7 +21,7 @@ clean:
 	rm -rf *.o *.out *.json
 
 kernel:
-	hipcc source/source.cpp source/main.cpp source/kernel.cpp -I bench_dir/build/install/include -L bench_dir/build/install/lib -lbenchmark -lbenchmark_main -o kernel.out
+	hipcc source/main.cpp source/kernel.cpp -I bench_dir/build/install/include -L bench_dir/build/install/lib -lbenchmark -lbenchmark_main -o kernel.out
 	./kernel.out
 
 help:
