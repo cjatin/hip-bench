@@ -1,7 +1,7 @@
 all:bench
 
 bench:
-	hipcc source/source.cpp source/main.cpp -I bench_dir/build/install/include -L bench_dir/build/install/lib -lbenchmark -lbenchmark_main -o out
+	hipcc source/source.cpp source/main.cpp source/memcpywithstream.cpp -I bench_dir/build/install/include -L bench_dir/build/install/lib -lbenchmark -lbenchmark_main -o out
 	./out
 
 json:
@@ -19,6 +19,10 @@ gbench:
 clean:
 	rm -rf bench_dir
 	rm -rf *.o *.out *.json
+
+kernel:
+	hipcc source/source.cpp source/main.cpp source/kernel.cpp -I bench_dir/build/install/include -L bench_dir/build/install/lib -lbenchmark -lbenchmark_main -o kernel.out
+	./kernel.out
 
 help:
 	echo "make gbench # build google benchmark"
