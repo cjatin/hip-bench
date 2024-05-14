@@ -25,7 +25,7 @@ static void BM_KernelxN_Memcpy_Sync(benchmark::State &state) {
 
   std::vector<float> out(size, 0.0f);
   for (auto _ : state) {
-    check(hipMemsetAsync(din, 0, sizeof(float) * size));
+    check(hipMemsetAsync(din, 0, sizeof(float) * size, stream));
     constexpr size_t launch_iter = 1000;
     for (size_t i = 0; i < launch_iter; i++) {
       accumulate_values<<<1, size, 0, stream>>>(din, dvals, size);
