@@ -37,7 +37,7 @@ static void BM_KernelxN_Memcpy_Sync(benchmark::State &state) {
     check(hipDeviceSynchronize());
   }
 
-  if (out[0] != 1000.0f) {
+  if (out[0] != launch_iter) {
     std::cout << out[0] << std::endl;
     std::abort();
   }
