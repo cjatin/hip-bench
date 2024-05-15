@@ -1,12 +1,13 @@
 all:bench
 
-bench:
-	hipcc source/source.cpp source/main.cpp source/memcpywithstream.cpp -I bench_dir/build/install/include -L bench_dir/build/install/lib -lbenchmark -lbenchmark_main -o out
-	./out
+bench-build:
+	hipcc source/source.cpp source/main.cpp source/memcpywithstream.cpp source/kernel.cpp -I bench_dir/build/install/include -L bench_dir/build/install/lib -lbenchmark -lbenchmark_main -o bench.out
 
-json:
-	hipcc source/source.cpp source/main.cpp -I bench_dir/build/install/include -L bench_dir/build/install/lib -lbenchmark -lbenchmark_main -o out
-	./out --benchmark_out=out.json --benchmark_out_format=json
+bench:bench-build
+	./bench.out
+
+json:bench-build
+	./bench.out --benchmark_out=out.json --benchmark_out_format=json
 
 gbench:
 	mkdir -p bench_dir
@@ -16,13 +17,29 @@ gbench:
 	cmake --build "bench_dir/build" --config Release --parallel $(nproc)
 	cmake --install "bench_dir/build" --config Release
 
-clean:
-	rm -rf bench_dir
+clean-exe:
 	rm -rf *.o *.out *.json
 
-kernel:
+clean:clean-exe
+	rm -rf bench_dir
+
+kernel-build:
 	hipcc source/main.cpp source/kernel.cpp -I bench_dir/build/install/include -L bench_dir/build/install/lib -lbenchmark -lbenchmark_main -o kernel.out
+
+kernel:kernel-build
 	./kernel.out
+
+kernel-json:kernel-build
+	./kernel.out --benchmark_out=out.json --benchmark_out_format=json
+
+memcpywithstream-build:
+	hipcc source/memcpywithstream.cpp source/main.cpp -I bench_dir/build/install/include -L bench_dir/build/install/lib -lbenchmark -lbenchmark_main -o mws.out
+
+memcpywithstream:memcpywithstream-build
+	./mws.out
+
+memcpywithstream-json:memcpywithstream-build
+	./mws.out --benchmark_out=out.json --benchmark_out_format=json
 
 help:
 	echo "make gbench # build google benchmark"

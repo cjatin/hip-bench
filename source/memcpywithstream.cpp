@@ -13,8 +13,8 @@ static void BM_MemcpyWithStreamHostToDevice(benchmark::State &state) {
   for (auto _ : state) {
     check(hipMemcpyWithStream(dptr, in.data(), sizeof(float) * size,
                               hipMemcpyHostToDevice, stream));
-    check(hipDeviceSynchronize());
   }
+  check(hipDeviceSynchronize());
   check(hipFree(dptr));
   check(hipStreamDestroy(stream));
 }
@@ -34,8 +34,8 @@ static void BM_MemcpyWithStreamDeviceToHost(benchmark::State &state) {
   for (auto _ : state) {
     check(hipMemcpyWithStream(in.data(), dptr, sizeof(float) * size,
                               hipMemcpyDeviceToHost, stream));
-    check(hipDeviceSynchronize());
   }
+  check(hipDeviceSynchronize());
   check(hipFree(dptr));
   check(hipStreamDestroy(stream));
 }
